@@ -8,32 +8,33 @@ const createBtn = document.querySelector("[data-create]");
 const destroyBtn = document.querySelector("[data-destroy]");
 const boxesContainer = document.querySelector("#boxes");
 
-createBtn.addEventListener("click", handleCreateBoxes);
+createBtn.addEventListener("click", onBtnClickCreate);
 destroyBtn.addEventListener("click", destroyBoxes);
 
-function handleCreateBoxes() {
-  const amount = input.value;
+function onBtnClickCreate() {
+  const amount = parseInt(input.value);
 
-  if (amount < 1 || amount > 100) {
-    alert("Please enter a number between 1 and 100.");
+  if (isNaN(amount) || amount < 1 || amount > 100) {
+    alert("Будь ласка введіть число від 1 до 100.");
     return;
   }
 
   createBoxes(amount);
+  input.value = "";
 }
 
 function createBoxes(amount) {
-  boxesContainer.innerHTML = "";
+  destroyBoxes();
 
+  let size = 30;
   for (let i = 0; i < amount; i++) {
     const box = document.createElement("div");
-    box.style.width = `${30 + i * 10}px`;
-    box.style.height = `${30 + i * 10}px`;
+    box.style.width = `${size}px`;
+    box.style.height = `${size}px`;
     box.style.backgroundColor = getRandomHexColor();
     boxesContainer.appendChild(box);
+    size += 10;
   }
-
-  input.value = "";
 }
 
 function destroyBoxes() {
